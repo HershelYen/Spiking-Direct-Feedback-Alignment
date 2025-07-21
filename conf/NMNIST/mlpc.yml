@@ -1,7 +1,7 @@
 dataset: nmnist
 device: cuda
 num_workers: 8
-data_dir: /home/hershel/data/
+data_dir: ~/data/
 out_dir: ./logs/
 resume: False
 

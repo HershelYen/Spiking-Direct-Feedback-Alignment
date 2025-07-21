@@ -191,7 +191,7 @@ class DFA(nn.Module):
             # The random feedback matrix is uniformly sampled between [-1, 1)
             #print(f"output_size{self.output_size}, max_feedback_size{self.max_feedback_size}")
             #self.feedback_matrix = 2 * (torch.rand(self.output_size, self.max_feedback_size, device=self.rp_device)-0.5)
-            self.feedback_matrix = torch.randn(self.output_size, self.max_feedback_size, device=self.rp_device)
+            self.feedback_matrix = 2 * torch.randn(self.output_size, self.max_feedback_size, device=self.rp_device)
             self.initialized = True
 
         return self.dfa(input, self)

@@ -1,8 +1,9 @@
 import torch
 import torch.nn as nn
-
+import os
 
 def dataset_generator(dataset, timesteps, batch_size, num_workers=8, data_dir=None):
+    data_dir = os.path.expanduser(data_dir)
     if dataset == 'nmnist':
         from spikingjelly.datasets import n_mnist
         train_dataset = n_mnist.NMNIST(data_dir + 'nmnist', 
