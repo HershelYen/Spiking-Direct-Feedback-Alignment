@@ -1,0 +1,25 @@
+dataset: BrailleLetter
+device: cuda
+num_workers: 8
+data_dir: /home/hershel/data/
+out_dir: ./logs/
+resume: False
+
+T: 20
+tau: 2.0
+v_threshold: 1.0
+
+input_dim: 4
+hidden_dim: 200
+classes: 28
+net: fc
+neuron_type: if
+num_layers: 3
+
+amp: False
+batch_size: 64
+epochs: 300
+optim: adam
+
+lr: 1e-3
+training_method: sdfa

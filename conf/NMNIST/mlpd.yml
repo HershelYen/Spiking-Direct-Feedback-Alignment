@@ -1,0 +1,25 @@
+dataset: nmnist
+device: cuda
+num_workers: 8
+data_dir: /home/hershel/data/
+out_dir: ./logs/
+resume: False
+
+T: 10
+tau: 2.0
+v_threshold: 1.0
+
+input_dim: 2312
+hidden_dim: 1000
+classes: 10
+net: fc
+neuron_type: lif
+num_layers: 5
+
+amp: False
+batch_size: 128
+epochs: 50
+optim: adam
+momentum: 0.9
+lr: 1e-2
+training_method: sdfa

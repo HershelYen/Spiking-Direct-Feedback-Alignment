@@ -1,0 +1,23 @@
+dataset: shd
+device: cuda
+data_dir: /home/hershel/data/
+out_dir: ./logs/
+resume: False
+
+T: 100
+v_threshold: 1.0
+
+input_dim: 700
+hidden_dim: 100
+classes: 20
+net: fc
+neuron_type: if
+num_layers: 3
+
+amp: False
+batch_size: 32
+epochs: 100
+optim: adam
+
+lr: 1e-3
+training_method: sdfa
