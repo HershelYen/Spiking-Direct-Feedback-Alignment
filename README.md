@@ -56,3 +56,11 @@ python train.py --config conf\NMNIST\mlpa.yml
 
 ## Citation
 If you find SNNGX code useful and helpful to your work, please kindly cite the paper
+
+@article{renWhen2025,
+  title = {When Pipelined In-Memory Accelerators Meet Spiking Direct Feedback Alignment: A Co-Design for Neuromorphic Edge Computing},
+  author = {Ren, Haoxiong and He, Yangu and Wong, Kwunhang and Bao, Rui and Lin, Ning and Wang, Zhongrui and Shang, Dashan},
+  year = {2025},
+  journal={arXiv preprint arXiv:2507.15603},
+  doi = {10.48550/arXiv.2507.15603},
+}
