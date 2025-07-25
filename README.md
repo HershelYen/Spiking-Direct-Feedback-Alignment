@@ -9,11 +9,11 @@
 
 :rocket: :rocket: :rocket: **News**
 
-- **Jul. 21, 2023**: Release the code for SNN training.
+- **Jul. 21, 2025**: Release the code for SNN training.
 
 
 ## Abstract
-Spiking Neural Networks (SNNs) are increasingly favored for deployment on resource-constrained edge devices due to their energy-efficient and event-driven processing capabilities. However, training SNNs remains challenging because of the computational intensity of traditional backpropagation algorithms adapted for spike-based systems. In this paper, we propose a novel software-hardware co-design that introduces a hardware-friendly training algorithm, Spiking Direct Feedback Alignment (SDFA) and implement it on a Resistive Random Access Memory (RRAM)-based In-Memory Computing (IMC) architecture, referred to as PipeSDFA, to accelerate SNN training. Software-wise, the computational complexity of SNN training is reduced by the SDFA through the elimination of sequential error propagation. Hardware-wise, a three-level pipelined dataflow is designed based on IMC architecture to parallelize the training process. Experimental results demonstrate that the PipeSDFA training accelerator incurs less than 2\% accuracy loss on five datasets compared to baselines, while achieving 1.1x~10.5x and 1.37x~2.1x reductions in training time and energy consumption, respectively compared to PipeLayer.
+Spiking Neural Networks (SNNs) are increasingly favored for deployment on resource-constrained edge devices due to their energy-efficient and event-driven processing capabilities. However, training SNNs remains challenging because of the computational intensity of traditional backpropagation algorithms adapted for spike-based systems. In this paper, we propose a novel software-hardware co-design that introduces a hardware-friendly training algorithm, Spiking Direct Feedback Alignment (SDFA) and implement it on a Resistive Random Access Memory (RRAM)-based In-Memory Computing (IMC) architecture, referred to as PipeSDFA, to accelerate SNN training. Software-wise, the computational complexity of SNN training is reduced by the SDFA through the elimination of sequential error propagation. Hardware-wise, a three-level pipelined dataflow is designed based on IMC architecture to parallelize the training process. Experimental results demonstrate that the PipeSDFA training accelerator incurs less than 2\% accuracy loss on five datasets compared to baselines, while achieving 1.1x\~10.5x and 1.37x\~2.1x reductions in training time and energy consumption, respectively compared to PipeLayer.
 
 
 ## Results
@@ -61,7 +61,6 @@ If you find SNNGX code useful and helpful to your work, please kindly cite the p
   title = {When Pipelined In-Memory Accelerators Meet Spiking Direct Feedback Alignment: A Co-Design for Neuromorphic Edge Computing},
   author = {Ren, Haoxiong and He, Yangu and Wong, Kwunhang and Bao, Rui and Lin, Ning and Wang, Zhongrui and Shang, Dashan},
   year = {2025},
-  journal={arXiv preprint arXiv:2507.15603},
-  doi = {10.48550/arXiv.2507.15603},
+  booktitle={2023 IEEE/ACM International Conference on Computer Aided Design (ICCAD)}, 
 }
 ```
