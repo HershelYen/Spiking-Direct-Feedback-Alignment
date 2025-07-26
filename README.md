@@ -1,4 +1,4 @@
-# When Pipelined In-Memory Accelerators Meet Spiking Direct Feedback Alignment: A Co-Design for Neuromorphic Edge Computing
+# When Pipelined In-Memory Accelerators Meet Spiking Direct Feedback Alignment: A Co-Design for Neuromorphic Edge Computing [[pdf](https://arxiv.org/abs/2507.15603)]
 
 > **Accepted at ICCAD 2025**
 
@@ -9,7 +9,7 @@
 
 :rocket: :rocket: :rocket: **News**
 
-- **Jul. 21, 2025**: Release the code for SNN training.
+- **Jul. 21, 2025**: Release the code for SDFA training.
 
 
 ## Abstract
@@ -55,7 +55,7 @@ python train.py --config conf\NMNIST\mlpa.yml
 ```
 
 ## Citation
-If you find SNNGX code useful and helpful to your work, please kindly cite the paper
+If you find this code useful and helpful to your work, please kindly cite the paper
 ```
 @article{renWhen2025,
   title = {When Pipelined In-Memory Accelerators Meet Spiking Direct Feedback Alignment: A Co-Design for Neuromorphic Edge Computing},
