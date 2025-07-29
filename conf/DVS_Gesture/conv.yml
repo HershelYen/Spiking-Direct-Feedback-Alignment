@@ -11,12 +11,14 @@ v_threshold: 1.0
 classes: 11
 net: conv
 channels: 128
-neuron_type: if
+neuron_type: lif
 
+use_cupy: True
 amp: False
-batch_size: 16
-epochs: 100
-optim: adamw
+batch_size: 8
+epochs: 300
+optim: adam
+loss_func: mse
 
 lr: 1e-3
 training_method: sdfa
