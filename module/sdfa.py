@@ -85,7 +85,7 @@ class DFABackend(torch.autograd.Function):
             grad_size = np.prod(remove_indices(grad_output.shape, dfa_context.batch_dims))
             #print(f"{dfa_context.feedback_matrix.dtype}")
             random_projection = torch.mm(grad_output.reshape(-1, grad_size).to(dfa_context.rp_device),
-                                         dfa_context.feedback_matrix)
+                                         dfa_context.feedback_matrix.to(dtype=grad_output.dtype))
             #print(f"random_projection_shape{random_projection.shape}")
             if dfa_context.normalization:
                 random_projection /= np.sqrt(np.prod(random_projection.shape[1:]))
@@ -188,10 +188,8 @@ class DFA(nn.Module):
                 if feedback_size > self.max_feedback_size:
                     self.max_feedback_size = feedback_size
 
-            # The random feedback matrix is uniformly sampled between [-1, 1)
-            #print(f"output_size{self.output_size}, max_feedback_size{self.max_feedback_size}")
             #self.feedback_matrix = 2 * (torch.rand(self.output_size, self.max_feedback_size, device=self.rp_device)-0.5)
-            self.feedback_matrix = 2 * torch.randn(self.output_size, self.max_feedback_size, device=self.rp_device)
+            self.feedback_matrix = torch.randn(self.output_size, self.max_feedback_size, device=self.rp_device)
             self.initialized = True
 
         return self.dfa(input, self)
