@@ -66,8 +66,10 @@ def parse_args():
     parser.add_argument('--num-layers', type=int, default=2, help='layer number of MLP')
     # neuron type
     parser.add_argument('--neuron-type', type=str, choices=['lif', 'if'], default='lif', help='neuron type of MLP, LIF or IF')
-
+   
     # -----------------------training parameters
+    # use cupy
+    parser.add_argument('--use-cupy', type=bool, default=False, help='use cupy or not')
     # amp
     parser.add_argument('--amp', action='store_true', help='automatic mixed precision training')
     # batch size
@@ -76,13 +78,17 @@ def parse_args():
     parser.add_argument('-e', '--epochs', default=20, type=int, 
                         help='number of total epochs to run, default=20')
     # optmizer
-    parser.add_argument('-o', '--optim', type=str, choices=['sgd', 'adam'], default='adam', help='use which optimizer. SGD or Adam')
+    parser.add_argument('-o', '--optim', type=str, choices=['sgd', 'adam', 'adamw'], default='adam', help='use which optimizer. SGD or Adam')
     # momentum for SGD
     parser.add_argument('-m', '--momentum', default=0.9, type=float, help='momentum for SGD')
+    # weight decay for Adam
+    parser.add_argument('--weight-decay', default=0, type=float, help="weight decay for Adam optimizer")
     # lr
     parser.add_argument('--lr', default=1e-3, type=float, help='learning rate, default=1e-3')
     # training_method
     parser.add_argument('-tm', '--training-method', choices=['bp', 'sdfa', 'shallow'], default='bp', type=str, help='training method of network, BP,DFA or SHALLOW')
+    # loss function
+    parser.add_argument('--loss-func', default='cross', choices=['mse', 'cross'], type=str, help="loss function")
     # config
     parser.add_argument('--config', type=str, default=None, help='path to config yaml file')
     
@@ -168,7 +174,7 @@ def main():
     neuron_dict = dict(
         v_threshold=args.v_threshold,
         surrogate_function=surrogate.ATan(),
-        detach_reset=True,
+        detach_reset=False,
     )
     if spiking_neuron == neuron.LIFNode:
         neuron_dict['tau'] = args.tau
@@ -184,7 +190,7 @@ def main():
                         output_dim=args.classes,
                         training_method=args.training_method,
                         num_layers=args.num_layers,  # Assuming 2 layers for simplicity
-                        use_cupy=True,
+                        use_cupy=args.use_cupy,
                         spiking_neuron= spiking_neuron,
                         **neuron_dict
                         )
@@ -194,7 +200,7 @@ def main():
             channels=args.channels,
             training_method=args.training_method,
             output_classes=args.classes,
-            use_cupy=True,
+            use_cupy=args.use_cupy,
             spiking_neuron=spiking_neuron,
             **neuron_dict
         )
@@ -204,7 +210,7 @@ def main():
             channels= args.channels,
             training_method= args.training_method,
             output_classes=args.classes,
-            use_cupy=True,
+            use_cupy=args.use_cupy,
             spiking_neuron=spiking_neuron,
             **neuron_dict
         )
@@ -220,7 +226,9 @@ def main():
     if args.optim == 'sgd':
         optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)
     elif args.optim == 'adam':
-        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
+    elif args.optim == 'adamw':
+        optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     else:
         raise NotImplementedError(f"Optimizer {args.optim} is not implemented yet.")
     
@@ -231,14 +239,20 @@ def main():
     scaler = None
     if args.amp:
         scaler = amp.GradScaler()
+        print("amp training")
     
     # Begin training
     log_print(f"Begin training {args.net} on {args.dataset} dataset")
     start_epoch = 0
     max_test_acc = -1
     
-
-
+    #critertion = nn.CrossEntropyLoss()
+    if args.loss_func == 'mse':
+        loss_func = nn.MSELoss()
+    elif args.loss_func == 'cross':
+        loss_func = nn.CrossEntropyLoss()
+    else:
+        raise ValueError("Unimplemented optimizer")
 
     for epoch in range(start_epoch, args.epochs):
         start_time = time.time()
@@ -252,18 +266,20 @@ def main():
             if args.dataset == 'shd':
                 frame = frame.to_dense()
             frame = frame.transpose(0, 1)
-            label_onehot = F.one_hot(label, num_classes=args.classes).float()
+            if args.loss_func == 'mse':
+                label_onehot = F.one_hot(label, num_classes=args.classes).float()
             if scaler is not None:
                 with amp.autocast(args.device):
                     out_fr = model(frame)
-                    loss = F.mse_loss(out_fr, label_onehot)
+                    loss = loss_func(out_fr, label_onehot if args.loss=='mse' else label)
                 
                 scaler.scale(loss).backward()
                 scaler.step(optimizer)
                 scaler.update()
             else:
                 out_fr = model(frame)
-                loss = F.mse_loss(out_fr, label_onehot)
+                #loss = F.mse_loss(out_fr, label_onehot)
+                loss = loss_func(out_fr, label_onehot if args.loss_func=='mse' else label)
                 loss.backward()
                 optimizer.step()
             functional.reset_net(model)
@@ -286,9 +302,11 @@ def main():
                 if args.dataset == 'shd':
                     frame = frame.to_dense()
                 frame = frame.transpose(0, 1)
-                label_onehot = F.one_hot(label, num_classes=args.classes).float()
+                if args.loss_func == 'mse':
+                    label_onehot = F.one_hot(label, num_classes=args.classes).float()
                 out_fr = model(frame)
                 loss = F.mse_loss(out_fr, label_onehot)
+                #loss = critertion(out_fr, label)
                 test_samples += label.numel()
                 test_loss += loss.item() * label.numel()
                 test_acc += (out_fr.argmax(dim=1) == label).sum().item()

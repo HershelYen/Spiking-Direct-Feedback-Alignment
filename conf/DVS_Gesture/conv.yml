@@ -1,0 +1,22 @@
+dataset: dvs
+device: cuda
+num_workers: 8
+data_dir: /home/hershel/data/
+out_dir: ./optuna_logs
+resume: False
+
+T: 30
+v_threshold: 1.0
+
+classes: 11
+net: conv
+channels: 128
+neuron_type: if
+
+amp: False
+batch_size: 16
+epochs: 100
+optim: adamw
+
+lr: 1e-3
+training_method: sdfa
