@@ -1,7 +1,7 @@
 dataset: shd
 device: cuda
 data_dir: /home/hershel/data/
-out_dir: ./logs/
+model_path: checkpoints/mlpb_SHD_100_100.pth
 resume: False
 
 T: 100
@@ -14,11 +14,9 @@ net: fc
 neuron_type: if
 num_layers: 3
 
+use_cupy: True
 amp: False
-batch_size: 64
-epochs: 100
-optim: adam
+batch_size: 32
 loss_func: mse
 
-lr: 1e-3
 training_method: sdfa

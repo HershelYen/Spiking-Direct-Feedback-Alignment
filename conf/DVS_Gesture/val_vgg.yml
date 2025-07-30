@@ -2,23 +2,23 @@ dataset: dvs
 device: cuda
 num_workers: 8
 data_dir: /home/hershel/data/
-out_dir: ./logs/
+model_path: checkpoints/vgg_dvs_30_512.pth
 resume: False
 
 T: 30
 v_threshold: 1.0
 
 classes: 11
-net: conv
-channels: 128
-neuron_type: lif
+net: vgg
+channels: 512
+neuron_type: if
+num_workers: 16
 
 use_cupy: True
 amp: False
 batch_size: 8
-epochs: 200
-optim: adam
+epochs: 300
 loss_func: mse
 
-lr: 1e-3
+
 training_method: sdfa

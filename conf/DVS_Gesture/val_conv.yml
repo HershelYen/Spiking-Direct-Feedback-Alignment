@@ -2,7 +2,7 @@ dataset: dvs
 device: cuda
 num_workers: 8
 data_dir: /home/hershel/data/
-out_dir: ./logs/
+model_path: checkpoints/conv_dvs_30_128.pth
 resume: False
 
 T: 30

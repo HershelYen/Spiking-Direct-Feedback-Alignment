@@ -18,8 +18,9 @@ num_layers: 3
 
 amp: False
 batch_size: 64
-epochs: 300
+epochs: 100
 optim: adam
+loss_func: mse
 
 lr: 1e-3
 training_method: sdfa

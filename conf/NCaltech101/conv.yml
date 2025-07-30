@@ -1,24 +1,21 @@
-dataset: dvs
+dataset: ncaltech
 device: cuda
-num_workers: 8
 data_dir: /home/hershel/data/
 out_dir: ./logs/
 resume: False
 
-T: 30
+T: 20
 v_threshold: 1.0
 
-classes: 11
+classes: 101
 net: conv
 channels: 128
 neuron_type: lif
 
-use_cupy: True
 amp: False
-batch_size: 8
+batch_size: 16
 epochs: 200
 optim: adam
-loss_func: mse
 
-lr: 1e-3
+lr: 1e-4
 training_method: sdfa
