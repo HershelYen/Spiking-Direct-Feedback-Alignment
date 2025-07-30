@@ -266,8 +266,7 @@ def main():
             if args.dataset == 'shd':
                 frame = frame.to_dense()
             frame = frame.transpose(0, 1)
-            if args.loss_func == 'mse':
-                label_onehot = F.one_hot(label, num_classes=args.classes).float()
+            label_onehot = F.one_hot(label, num_classes=args.classes).float()
             if scaler is not None:
                 with amp.autocast(args.device):
                     out_fr = model(frame)
@@ -278,7 +277,6 @@ def main():
                 scaler.update()
             else:
                 out_fr = model(frame)
-                #loss = F.mse_loss(out_fr, label_onehot)
                 loss = loss_func(out_fr, label_onehot if args.loss_func=='mse' else label)
                 loss.backward()
                 optimizer.step()
@@ -302,8 +300,7 @@ def main():
                 if args.dataset == 'shd':
                     frame = frame.to_dense()
                 frame = frame.transpose(0, 1)
-                if args.loss_func == 'mse':
-                    label_onehot = F.one_hot(label, num_classes=args.classes).float()
+                label_onehot = F.one_hot(label, num_classes=args.classes).float()
                 out_fr = model(frame)
                 loss = F.mse_loss(out_fr, label_onehot)
                 #loss = critertion(out_fr, label)

@@ -36,40 +36,33 @@ class VGG11_SNN(nn.Module):
             layer.Conv2d(2, 64, kernel_size=3, stride=1, padding=1, bias=False),
             spiking_neuron(*args, **kwargs),
             layer.MaxPool2d(2, 2),#64
-            #layer.Dropout(0.5),
         )
         self.conv2 = nn.Sequential(
             layer.Conv2d(channels//8, channels//4, kernel_size=3, stride=1, padding=1, bias=False),
             spiking_neuron(*args, **kwargs),
             layer.MaxPool2d(2, 2),#32
-            #layer.Dropout(0.5),
         )
         self.conv3 = nn.Sequential(
             layer.Conv2d(channels//4, channels//2, kernel_size=3, stride=1, padding=1, bias=False),
             spiking_neuron(*args, **kwargs),
-            #layer.Dropout(0.5),
         )
         self.conv4 = nn.Sequential(
             layer.Conv2d(channels//2, channels//2, kernel_size=3, stride=1, padding=1, bias=False),
             spiking_neuron(*args, **kwargs),
             layer.MaxPool2d(2, 2),#16
-            #layer.Dropout(0.5),
         )
         self.conv5 = nn.Sequential(
             layer.Conv2d(channels//2, channels, kernel_size=3, stride=1, padding=1, bias=False),
             spiking_neuron(*args, **kwargs),
-            #layer.Dropout(0.5),
         )
         self.conv6 = nn.Sequential(
             layer.Conv2d(channels, channels, kernel_size=3, stride=1, padding=1, bias=False),
             spiking_neuron(*args, **kwargs),
             layer.MaxPool2d(2, 2),#8
-            #layer.Dropout(0.5),
         )
         self.conv7 = nn.Sequential(
             layer.Conv2d(channels, channels, kernel_size=3, stride=1, padding=1, bias=False),
             spiking_neuron(*args, **kwargs),
-            #layer.Dropout(0.5),
         )
         self.conv8 = nn.Sequential(
             layer.Conv2d(channels, channels, kernel_size=3, stride=1, padding=1, bias=False),
@@ -80,14 +73,12 @@ class VGG11_SNN(nn.Module):
         if data_set == 'dvs':
             self.fc1 = nn.Sequential(
                 layer.Flatten(),
-                #layer.Dropout(0.5),
                 layer.Linear(in_features=channels*4*4, out_features=4096),
                 spiking_neuron(*args, **kwargs),
             )
         elif data_set == 'ncaltech':
             self.fc1 = nn.Sequential(
                 layer.Flatten(),
-                #layer.Dropout(0.5),
                 layer.Linear(in_features=channels*5*7, out_features=4096),
                 spiking_neuron(*args, **kwargs),
             )
@@ -96,7 +87,6 @@ class VGG11_SNN(nn.Module):
             spiking_neuron(*args, **kwargs),
         )
         self.fc3 = nn.Sequential(
-            #layer.Dropout(0.5),
             layer.Linear(in_features=4096, out_features=output_classes*10),
             spiking_neuron(*args, **kwargs),
             layer.VotingLayer(10)
