@@ -10,6 +10,7 @@
 :rocket: :rocket: :rocket: **News**
 
 - **Jul. 21, 2025**: Release the code for SDFA training.
+- **Jul. 30, 2025**: Release the code for SDFA validation.
 
 
 ## Abstract
