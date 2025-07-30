@@ -48,10 +48,21 @@ git clone https://github.com/HershelYen/Spiking-Direct-Feedback-Alignment.git
 2. Install dependecies
 Please indicate your path to the Dataset under `conf` filefolder
 
-3. Run the main script
+3. Run the train script
+
 Example
 ```bash
 python train.py --config conf\NMNIST\mlpa.yml
+```
+
+### Validate Model Accuracy
+1. Download model checkpoints or train yourself.
+2. Put `*.pth` file under `checkpoints` filefolder.
+3. Run the validate script
+
+Example
+```bash
+python validate.py --config conf\DVS_Gesture\val_conv.yml
 ```
 
 ## Citation
