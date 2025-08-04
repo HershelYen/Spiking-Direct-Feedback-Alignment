@@ -73,6 +73,6 @@ If you find this code useful and helpful to your work, please kindly cite the pa
   title = {When Pipelined In-Memory Accelerators Meet Spiking Direct Feedback Alignment: A Co-Design for Neuromorphic Edge Computing},
   author = {Ren, Haoxiong and He, Yangu and Wong, Kwunhang and Bao, Rui and Lin, Ning and Wang, Zhongrui and Shang, Dashan},
   year = {2025},
-  booktitle={2023 IEEE/ACM International Conference on Computer Aided Design (ICCAD)}, 
+  booktitle={2025 IEEE/ACM International Conference on Computer Aided Design (ICCAD)}, 
 }
 ```
